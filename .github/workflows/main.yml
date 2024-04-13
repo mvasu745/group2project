@@ -2,7 +2,7 @@ name: Deploy to ECR
 
 on: 
   push:
-    branches: [ main ]
+    branches: [ dev ]
 
 jobs:
 
@@ -29,7 +29,7 @@ jobs:
     - name: Build, test, tag, and push image to Amazon ECR database
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: clo835_assignment1_repository_mysql
+        ECR_REPOSITORY: clo835_project_repository_mysql
         IMAGE_TAG: v1.0
       run: |
         # Docker build image database
@@ -39,7 +39,7 @@ jobs:
     - name: Build, test, tag, and push image for Amazon ECR app
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: clo835_assignment1_repository_webapp
+        ECR_REPOSITORY: clo835_project_repository_webapp
         IMAGE_TAG: v1.1
       run: |
         # Docker build app
