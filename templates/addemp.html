@@ -1,15 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Add Employee Information</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLO835 Flask App</title>
+    <style>
+        body {
+            background-image: url("{{ background_image }}");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        header {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            margin-top: 50px;
+            text-align: center;
+        }
+        input[type="number"],
+        input[type="text"],
+        button {
+            height: 25px;
+            font-size: 14pt;
+            color: grey;
+            margin-bottom: 10px;
+        }
+        button {
+            background: grey;
+            width: 200px;
+            color: white;
+            font-style: oblique;
+        }
+    </style>
 </head>
-<center>
-	<font color="black" size="4" style="font-family: avenir">
-
-		<h1 style="color: DodgerBlue">Employee Database</h1>
-		<body style="background: {{ color }};" >
-
-			<form action="/addemp" autocomplete="on" method = "POST" enctype="multipart/form-data">
+<body>
+    <header>
+        <h1>{{ group_name }}</h1>
+        <p>{{ group_slogan }}</p>
+    </header>
+    
+    <form action="/addemp" autocomplete="on" method = "POST" enctype="multipart/form-data">
 
 			
 
@@ -29,8 +64,5 @@
 			</form>
 			<br><br><br><br><br><br><br><br>
             <a href="/about">About Us</a>
-		</body>
-
-	</font>
-</center>
+</body>
 </html>
