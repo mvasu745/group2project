@@ -13,9 +13,9 @@ DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
 DBPORT = int(os.environ.get("DBPORT")) or "3306"
-AWS_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME") or "clo800projectbucket"
-IMAGE_NAME = os.environ.get("IMAGE_NAME") or "image2.jpg"
-GROUP_NAME = os.environ.get("GROUP_NAME") or "Group12"
+AWS_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME") or "group2-project"
+IMAGE_NAME = os.environ.get("IMAGE_NAME") or "project.jpg"
+GROUP_NAME = os.environ.get("GROUP_NAME") or "Group2"
 GROUP_SLOGAN = os.environ.get("GROUP_SLOGAN") or "Keep Trying Until You Succeed"
 
 # Create a connection to the MySQL database
