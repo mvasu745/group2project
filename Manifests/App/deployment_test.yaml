@@ -21,7 +21,7 @@ spec:
       - image: 610510370017.dkr.ecr.us-east-1.amazonaws.com/clo835_project_repository_webapp:v1.1
         name: webapp-container
         ports:
-        - containerPort: 8080
+        - containerPort: 81
         env:
         - name: DBPWD
           valueFrom:
