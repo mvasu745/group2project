@@ -12,9 +12,9 @@ DBHOST = os.environ.get("DBHOST") or "localhost"
 DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
-DBPORT = int(os.environ.get("DBPORT")) or "3306"
-AWS_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME") or "group2-project"
-IMAGE_NAME = os.environ.get("IMAGE_NAME") or "images.jpg"
+DBPORT = int(os.environ.get("DBPORT", "3306"))
+AWS_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME") or "clo800projectbucket"
+IMAGE_NAME = os.environ.get("IMAGE_NAME") or "images3.jpg"
 GROUP_NAME = os.environ.get("GROUP_NAME") or "Group2"
 GROUP_SLOGAN = os.environ.get("GROUP_SLOGAN") or "Keep Trying Until You Succeed"
 
@@ -25,19 +25,23 @@ db_conn = connections.Connection(
     user= DBUSER,
     password= DBPWD, 
     db= DATABASE
-
+    
 )
 output = {}
 table = 'employee';
 
 def download_image(bucket, image):
-    if not os.path.exists('static'):
-        os.makedirs('static')
-    output_file = 'static/background.jpg'
-    print(bucket, image)
-    s3 = boto3.resource('s3')
-    s3.Bucket(bucket).download_file(image, output_file)
-    return output_file
+    try:
+        if not os.path.exists('static'):
+            os.makedirs('static')
+        output_file = 'static/background.jpg'
+        print(bucket, image)
+        s3 = boto3.resource('s3')
+        s3.Bucket(bucket).download_file(image, output_file)
+        return output_file
+    except Exception as e:
+            print("Error downloading image:", e)
+            return None
 
 @app.route("/download_image", methods=['GET', 'POST'])
 def download_image_route():
@@ -63,12 +67,12 @@ def AddEmp():
     primary_skill = request.form['primary_skill']
     location = request.form['location']
 
-
+  
     insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     try:
-
+        
         cursor.execute(insert_sql,(emp_id, first_name, last_name, primary_skill, location))
         db_conn.commit()
         emp_name = "" + first_name + " " + last_name
@@ -96,14 +100,14 @@ def FetchData():
     try:
         cursor.execute(select_sql,(emp_id))
         result = cursor.fetchone()
-
+        
         # Add No Employee found form
         output["emp_id"] = result[0]
         output["first_name"] = result[1]
         output["last_name"] = result[2]
         output["primary_skills"] = result[3]
         output["location"] = result[4]
-
+        
     except Exception as e:
         print(e)
 
@@ -116,4 +120,4 @@ def FetchData():
 if __name__ == '__main__':
     bg = download_image(AWS_BUCKET_NAME, IMAGE_NAME)
     print(bg)
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=81, debug=True)
