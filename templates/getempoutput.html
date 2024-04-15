@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Information</title>
+    <style>
+        body {
+            background-image: url("{{ background_image }}");
+            background-size: cover;
+            background-position: center;
+            margin: 0; 
+            padding: 0; 
+            height: 100vh;
+        }
+        center {
+            color: black;
+            font-size: 5;
+            font-family: avenir;
+            margin-top: 20%;
+        }
+        h1 {
+            color: DodgerBlue;
+        }
+        form {
+            margin-top: 20px;
+        }
+        div {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+        }
+        div > * {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Employee Information</h1>
+        <form>
+            <div>
+                Employee ID:<br> {{ id }} <br><br>
+                First Name:<br> {{ fname }} <br><br>
+                Last Name:<br> {{ lname }} <br><br>
+                Primary Interest:<br> {{ interest }} <br><br>
+                Location:<br> {{ location }} <br><br>
+            </div>
+        </form>
+        <a href="{{ url_for('home') }}">Back</a>
+    </center>
+</body>
+</html>
