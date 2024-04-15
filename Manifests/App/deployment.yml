@@ -2,28 +2,44 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp-deployment
-  namespace: project
+  labels:
+    app: employees
+    component: webapp
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: employees
+      component: webapp
   template:
     metadata:
       labels:
         app: employees
+        component: webapp
     spec:
+      serviceAccountName: clo835
       containers:
-        - name: container-webapp
-          image: 892915606637.dkr.ecr.us-east-1.amazonaws.com/clo835_project_repository_webapp_project2
-          ports:
-            - containerPort: 8080
-          env:
-          - name: DBPWD
-            value: athakur28
-          - name: DBUSER
-            value: root
-          - name: DBHOST
-            value: "mysql-service.sqldb.svc.cluster.local"
-          - name: DBPORT
-            value: "3306"
+      - image: 610510370017.dkr.ecr.us-east-1.amazonaws.com/clo835_project_repository_webapp:v1.1
+        name: webapp-container
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 81
+        env:
+        - name: DBPWD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: MYSQL_ROOT_PASSWORD
+        - name: DBUSER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: DBUSER
+        - name: DBHOST
+          value: "mysql-service.final.svc.cluster.local"
+        - name: DBPORT
+          value: "3306"
+          
+        envFrom:
+          - configMapRef:
+              name: clo835  
